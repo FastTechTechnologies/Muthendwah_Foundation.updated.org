@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Talk To Mutendwah Foundation — Empowering young mothers, adolescent girls, and caregivers in Nairobi and Kitui County through mental health, digital literacy, and economic empowerment." />
+  <meta name="theme-color" content="#1E4B8F" />
+  <title>Talk To Mutendwah Foundation | Everyone Can Serve</title>
+
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Leaflet (OpenStreetMap) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- MapLibre CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
+
+  <!-- ═══════════════════════════════════════════════════════════
+       INLINE STYLES — Resources Section + Registration Badge
+       (Kept inline so no changes are needed in css/style.css)
+       ═══════════════════════════════════════════════════════════ -->
+  <style>
+    /* Registration chip inside About */
+    .registration-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--blue), var(--plum));
+      color: #fff;
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: .82rem;
+      font-weight: 600;
+      letter-spacing: .5px;
+      margin-bottom: 16px;
+      box-shadow: 0 6px 18px rgba(30,75,143,.25);
+    }
+    .registration-chip i { color: var(--gold); }
+
+    /* ===== RESOURCES SECTION ===== */
+    .resources-section {
+      background: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+    .resources-section::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 260px; height: 260px;
+      background: radial-gradient(circle, rgba(200,150,90,.12), transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .resource-card {
+      background: var(--white);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all .35s cubic-bezier(.4,0,.2,1);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      border-top: 4px solid var(--gold);
+      position: relative;
+    }
+    .resource-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      border-top-color: var(--blue);
+    }
+
+    .resource-preview {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #eaf1fb, #f3ede3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .resource-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .6s ease;
+    }
+    .resource-card:hover .resource-preview img { transform: scale(1.05); }
+
+    /* Fallback when no image */
+    .resource-preview.pdf-placeholder {
+      background: linear-gradient(135deg, #1E4B8F 0%, #5B2C6F 100%);
+    }
+    .resource-pdf-icon {
+      font-size: 4rem;
+      color: #fff;
+      opacity: .9;
+      position: relative;
+    }
+    .resource-pdf-icon::after {
+      content: 'PDF';
+      position: absolute;
+      bottom: -8px;
+      right: -20px;
+      background: var(--gold);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .resource-body {
+      padding: 26px 24px 24px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .resource-type {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--cream-2);
+      color: var(--blue);
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-bottom: 12px;
+      align-self: flex-start;
+    }
+    .resource-type i { color: var(--gold); }
+
+    .resource-title {
+      font-family: var(--font-head);
+      font-size: 1.25rem;
+      color: var(--charcoal);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .resource-desc {
+      font-size: .9rem;
+      color: var(--gray);
+      line-height: 1.6;
+      margin-bottom: 18px;
+      flex-grow: 1;
+    }
+
+    .resource-meta {
+      display: flex;
+      gap: 16px;
+      font-size: .78rem;
+      color: var(--gray);
+      margin-bottom: 18px;
+      padding-bottom: 18px;
+      border-bottom: 1px dashed var(--border);
+    }
+    .resource-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .resource-meta i { color: var(--gold); }
+
+    .resource-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-resource {
+      flex: 1;
+      min-width: 120px;
+      padding: 10px 18px;
+      border-radius: 50px;
+      font-size: .86rem;
+      font-weight: 600;
+      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all .35s ease;
+      text-decoration: none;
+    }
+
+    .btn-resource-primary {
+      background: var(--blue);
+      color: #fff;
+      border: 2px solid var(--blue);
+    }
+    .btn-resource-primary:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-resource-outline {
+      background: transparent;
+      color: var(--blue);
+      border: 2px solid var(--blue);
+    }
+    .btn-resource-outline:hover {
+      background: var(--blue);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* Help note */
+    .resources-help {
+      background: linear-gradient(135deg, #f8f5ef 0%, #eaf1fb 100%);
+      border-left: 4px solid var(--gold);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .resources-help i {
+      font-size: 2rem;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+    .resources-help p {
+      margin: 0;
+      color: var(--charcoal);
+      font-size: .95rem;
+      flex-grow: 1;
+    }
+    .resources-help a { font-weight: 600; }
+
+    /* Dark mode */
+    body.dark-mode .resource-card {
+      background: var(--white);
+    }
+    body.dark-mode .resource-type {
+      background: var(--border);
+      color: var(--gold-light);
+    }
+    body.dark-mode .resources-help {
+      background: linear-gradient(135deg, var(--white), var(--cream-2));
+    }
+
+    /* Responsive */
+    @media (max-width: 575px) {
+      .resource-preview { height: 180px; }
+      .resource-body { padding: 22px 20px; }
+      .resource-title { font-size: 1.1rem; }
+      .resource-actions { flex-direction: column; }
+      .btn-resource { width: 100%; }
+      .resources-help { padding: 20px; flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="loader-ring"></div>
+</div>
+
+<!-- #5 SCROLL PROGRESS BAR -->
+<div id="scrollProgress" class="scroll-progress"></div>
+
+<!-- #2 CUSTOM CURSOR -->
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+<!-- TOP BAR -->
+<div class="top-bar d-none d-lg-block">
+  <div class="container d-flex justify-content-between align-items-center">
+    <div class="top-info">
+      <span><i class="fas fa-envelope me-2"></i>info@talktotmutendwah.org</span>
+      <span class="ms-4"><i class="fas fa-phone me-2"></i>+254 717 369 540</span>
+    </div>
+    <div class="top-social">
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg main-nav sticky-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="#home">
+      <img src="assets/logo.png" alt="Talk To Mutendwah Foundation" class="brand-logo" />
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end">
+      <ul class="navbar-nav align-items-lg-center">
+        <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#programs">Programs</a></li>
+        <li class="nav-item"><a class="nav-link" href="#impact">Impact</a></li>
+        <li class="nav-item"><a class="nav-link" href="#map">Map</a></li>
+        <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+        <li class="nav-item"><a class="nav-link" href="#certificates">Certificates</a></li>
+        <li class="nav-item"><a class="nav-link" href="#resources">Resources</a></li>
+        <li class="nav-item"><a class="nav-link" href="#partners">Partners</a></li>
+        <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        <li class="nav-item ms-lg-3 d-flex gap-2 mt-3 mt-lg-0 align-items-center">
+          <button class="btn btn-theme-outline btn-sm" data-bs-toggle="modal" data-bs-target="#volunteerModal">
+            <i class="fas fa-hands-helping me-1"></i> Volunteer
+          </button>
+          <button class="btn btn-theme btn-sm" data-bs-toggle="modal" data-bs-target="#donateModal">
+            <i class="fas fa-heart me-1"></i> Donate
+          </button>
+        </li>
+        <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <i class="fas fa-moon"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE OFFCANVAS NAV -->
+<div class="offcanvas offcanvas-end" id="mobileNav">
+  <div class="offcanvas-header">
+    <img src="assets/logo.png" alt="logo" style="height:50px;" />
+    <button class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" href="#home" data-bs-dismiss="offcanvas">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="#about" data-bs-dismiss="offcanvas">About</a></li>
+      <li class="nav-item"><a class="nav-link" href="#programs" data-bs-dismiss="offcanvas">Programs</a></li>
+      <li class="nav-item"><a class="nav-link" href="#impact" data-bs-dismiss="offcanvas">Impact</a></li>
+      <li class="nav-item"><a class="nav-link" href="#map" data-bs-dismiss="offcanvas">Map</a></li>
+      <li class="nav-item"><a class="nav-link" href="#gallery" data-bs-dismiss="offcanvas">Gallery</a></li>
+      <li class="nav-item"><a class="nav-link" href="#testimonials" data-bs-dismiss="offcanvas">Testimonials</a></li>
+      <li class="nav-item"><a class="nav-link" href="#certificates" data-bs-dismiss="offcanvas">Certificates</a></li>
+      <li class="nav-item"><a class="nav-link" href="#resources" data-bs-dismiss="offcanvas">Resources</a></li>
+      <li class="nav-item"><a class="nav-link" href="#partners" data-bs-dismiss="offcanvas">Partners</a></li>
+      <li class="nav-item"><a class="nav-link" href="#team" data-bs-dismiss="offcanvas">Team</a></li>
+      <li class="nav-item"><a class="nav-link" href="#contact" data-bs-dismiss="offcanvas">Contact</a></li>
+    </ul>
+    <div class="d-grid gap-2 mt-4">
+      <button class="btn btn-theme" data-bs-toggle="modal" data-bs-target="#donateModal" data-bs-dismiss="offcanvas"><i class="fas fa-heart me-2"></i>Donate</button>
+      <button class="btn btn-theme-outline" data-bs-toggle="modal" data-bs-target="#volunteerModal" data-bs-dismiss="offcanvas"><i class="fas fa-hands-helping me-2"></i>Volunteer</button>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <video class="hero-video" autoplay muted loop playsinline poster="assets/hero.jpg">
+    <source src="assets/hero-video.mp4" type="video/mp4" />
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="container hero-content">
+    <div class="row align-items-center min-vh-100">
+      <div class="col-lg-7" data-aos="fade-right">
+        <span class="hero-badge"><i class="fas fa-hand-holding-heart me-2"></i>Registered Non-Profit · Kenya</span>
+        <h1 class="hero-title">
+          Empowering <span class="text-gold">Young Mothers</span>,<br />
+          Adolescent Girls &amp; Caregivers
+        </h1>
+        <p class="hero-sub">
+          Building a resilient society where young women are mentally whole, economically self-reliant,
+          and equipped with the health, skills, and literacy needed to thrive.
+        </p>
+        <div class="hero-cta">
+          <button class="btn btn-theme btn-lg" data-bs-toggle="modal" data-bs-target="#donateModal">
+            <i class="fas fa-heart me-2"></i>Donate Now
+          </button>
+          <a href="#programs" class="btn btn-ghost btn-lg ms-2">
+            Explore Programs <i class="fas fa-arrow-right ms-2"></i>
+          </a>
+        </div>
+        <p class="hero-tagline mt-4">
+          <em>"Everyone can be great because everyone can serve."</em>
+        </p>
+      </div>
+      <div class="col-lg-5 d-none d-lg-block" data-aos="fade-left" data-aos-delay="200">
+        <div class="hero-card">
+          <img src="assets/hero.jpeg" alt="Community" class="img-fluid rounded-3" />
+          <div class="hero-card-badge">
+            <i class="fas fa-users"></i>
+            <div>
+              <strong>500+</strong>
+              <span>Lives Touched</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT COUNTERS -->
+<section class="impact-section py-5" id="impact">
+  <div class="container">
+    <div class="row text-center g-4">
+      <div class="col-6 col-lg-3" data-aos="zoom-in">
+        <div class="impact-card">
+          <div class="impact-icon"><i class="fas fa-user-graduate"></i></div>
+          <h3 class="counter" data-target="200">0</h3>
+          <p>Youth Trained Annually</p>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3" data-aos="zoom-in" data-aos-delay="100">
+        <div class="impact-card">
+          <div class="impact-icon"><i class="fas fa-female"></i></div>
+          <h3 class="counter" data-target="200">0</h3>
+          <p>Caregivers Reached</p>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3" data-aos="zoom-in" data-aos-delay="200">
+        <div class="impact-card">
+          <div class="impact-icon"><i class="fas fa-laptop-code"></i></div>
+          <h3 class="counter" data-target="1000">0</h3>
+          <p>Girls &amp; Pads Goal</p>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3" data-aos="zoom-in" data-aos-delay="300">
+        <div class="impact-card">
+          <div class="impact-icon"><i class="fas fa-seedling"></i></div>
+          <h3 class="counter" data-target="6">0</h3>
+          <p>Active Programs</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section about-section" id="about">
+  <div class="container">
+    <div class="row g-5 about-row">
+
+      <div class="col-lg-5" data-aos="fade-right">
+        <div class="about-sticky">
+          <div class="about-images">
+            <img src="assets/about.jpg" alt="Community work" class="about-img-main" />
+            <div class="about-img-badge">
+              <i class="fas fa-quote-left"></i>
+              <p>Everyone can be great because everyone can serve.</p>
+            </div>
+          </div>
+
+          <div class="founder-mini-card">
+            <div class="founder-mini-avatar">
+              <img src="assets/team-1.jpg" alt="Faith Mbusi" />
+            </div>
+            <div>
+              <strong>Faith Mbusi</strong>
+              <span>Founder, Director &amp; Head of Mental Health</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-7" data-aos="fade-left">
+        <div class="registration-chip">
+          <i class="fas fa-certificate"></i>
+          <span>Registered Non-Profit · Soc/77981</span>
+        </div>
+        <span class="section-label">Who We Are</span>
+        <h2 class="section-title">A Foundation Built on <span class="text-gold">Compassion &amp; Service</span></h2>
+        <p class="lead-text">
+          <strong>Talk To Mutendwah Foundation is a registered non-profit organisation in Kenya</strong>, committed
+          to promoting holistic mental health and well-being for adolescent girls, young mothers, and their
+          caregivers through psycho-social support, digital literacy, menstrual health advocacy, and economic
+          empowerment. We currently operate in <strong>Nairobi County</strong> and <strong>Kitui County (Ikutha)</strong>.
+        </p>
+
+        <div class="mv-cards mt-4">
+          <div class="mv-card">
+            <div class="mv-icon"><i class="fas fa-eye"></i></div>
+            <div>
+              <h5>Our Vision</h5>
+              <p>A resilient society where young women, mothers, and caregivers are mentally whole, economically self-reliant, and equipped to thrive.</p>
+            </div>
+          </div>
+          <div class="mv-card">
+            <div class="mv-icon"><i class="fas fa-bullseye"></i></div>
+            <div>
+              <h5>Our Mission</h5>
+              <p>Holistic mental health through psycho-social support, menstrual health advocacy, digital literacy, sustainable agriculture, and economic empowerment.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-4 g-3">
+          <div class="col-md-6"><div class="value-chip"><i class="fas fa-heart"></i> Empathy &amp; Compassion</div></div>
+          <div class="col-md-6"><div class="value-chip"><i class="fas fa-fist-raised"></i> Empowerment</div></div>
+          <div class="col-md-6"><div class="value-chip"><i class="fas fa-users"></i> Inclusivity &amp; Alliance</div></div>
+          <div class="col-md-6"><div class="value-chip"><i class="fas fa-microchip"></i> Innovation</div></div>
+          <div class="col-md-6"><div class="value-chip"><i class="fas fa-shield-alt"></i> Integrity</div></div>
+          <div class="col-md-6"><div class="value-chip"><i class="fas fa-graduation-cap"></i> Education</div></div>
+        </div>
+
+        <div class="founder-story mt-5" data-aos="fade-up">
+          <div class="founder-story-header">
+            <div class="founder-avatar">
+              <img src="assets/team-1.jpg" alt="Faith Mbusi" />
+            </div>
+            <div>
+              <span class="section-label">Our Story</span>
+              <h3 class="founder-story-title">How It All Began — <span class="text-gold">Faith Mbusi's Journey</span></h3>
+            </div>
+          </div>
+
+          <div class="founder-story-body">
+            <p>
+              Faith Mbusi founded the Mutendwah Foundation during COVID-19, initially delivering homegrown
+              vegetables to children's homes in Athi River. Recognizing the children's deep emotional distress,
+              she gathered fellow counselors to provide vital mental health support. This grew into intensive
+              Facebook and YouTube live sessions, eventually leading to mental health broadcasts on KCB.
+            </p>
+            <p>
+              Driven by her own painful teenage experiences with unaddressed menstrual disorders, Faith launched
+              <strong>Wellness in Flow</strong> — an outreach program educating young adolescent girls and breaking
+              menstrual stigma. Her path shifted again when her baby was born with Down syndrome. Interacting
+              with other caregivers revealed the unique, immense challenges of managing puberty for neurodivergent
+              girls. In response, Faith established the <strong>Menstrual Summit</strong> to connect caregivers with experts
+              on specialized products, nutrition, and mental health.
+            </p>
+            <p>
+              Passionate about education and women's empowerment, Faith also realized many young mothers are
+              trapped by financial and childcare burdens, preventing them from attending college. To bridge this
+              gap, she championed online, self-paced learning platforms paired with dedicated tutors, allowing
+              young moms and their kids to learn flexibly, gain skills, and achieve financial independence.
+            </p>
+            <p class="founder-story-closing">
+              Today, the Mutendwah Foundation stands as a holistic beacon of hope, seamlessly intersecting
+              mental wellness, menstrual dignity, disability advocacy, and accessible education.
+            </p>
+
+            <div class="founder-signature">
+              <strong>Faith Mbusi</strong>
+              <span>Founder, Director &amp; Head of Mental Health</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="section programs-section" id="programs">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">What We Do</span>
+      <h2 class="section-title">Our <span class="text-gold">Programs</span></h2>
+      <p class="section-subtitle mx-auto">
+        Six integrated initiatives designed to break cycles of poverty, stigma, and digital exclusion.
+      </p>
+    </div>
+
+    <div class="program-filters text-center mb-5" data-aos="fade-up">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="education">Education</button>
+      <button class="filter-btn" data-filter="tech">Tech</button>
+      <button class="filter-btn" data-filter="health">Health</button>
+      <button class="filter-btn" data-filter="economy">Economy</button>
+      <button class="filter-btn" data-filter="media">Media</button>
+    </div>
+
+    <div class="row g-4" id="programsGrid">
+
+      <div class="col-md-6 col-lg-4 program-item" data-category="education" data-aos="fade-up">
+        <div class="program-card">
+          <div class="program-img">
+            <img src="assets/program-mentorship.jpg" alt="School Mentorship Project" />
+            <span class="program-tag active-tag">Active</span>
+          </div>
+          <div class="program-body">
+            <div class="program-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+            <h4>School Mentorship Project</h4>
+            <p>Guiding students through critical transitional years with structured career development, life skills, self-esteem, and decision-making modules.</p>
+            <ul class="program-points">
+              <li><i class="fas fa-check"></i> School-based mentorship</li>
+              <li><i class="fas fa-check"></i> Career &amp; life-skills modules</li>
+            </ul>
+            <button class="btn btn-link-theme" data-bs-toggle="modal" data-bs-target="#programModal1">Learn More <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 program-item" data-category="tech" data-aos="fade-up" data-aos-delay="100">
+        <div class="program-card featured">
+          <div class="program-img">
+            <img src="assets/program-mama-angaza1.jpg" alt="Mama Angaza" />
+            <span class="program-tag active-tag">Active</span>
+            <span class="program-flag"><i class="fas fa-star"></i> Flagship</span>
+          </div>
+          <div class="program-body">
+            <div class="program-icon"><i class="fas fa-laptop-code"></i></div>
+            <h4>Mama Angaza</h4>
+            <p>Bridging the digital divide by equipping young mothers with globally recognized Cisco and Huawei certifications.</p>
+            <ul class="program-points">
+              <li><i class="fas fa-check"></i> Cisco &amp; Huawei pathways</li>
+              <li><i class="fas fa-check"></i> IT sponsorship for brilliant students</li>
+            </ul>
+            <button class="btn btn-link-theme" data-bs-toggle="modal" data-bs-target="#programModal2">Learn More <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 program-item" data-category="media health" data-aos="fade-up" data-aos-delay="200">
+        <div class="program-card">
+          <div class="program-img">
+            <img src="assets/program-podcast.jpg" alt="Nuggets with Wisdom Podcast" />
+            <span class="program-tag active-tag">Active</span>
+          </div>
+          <div class="program-body">
+            <div class="program-icon"><i class="fas fa-microphone-alt"></i></div>
+            <h4>Nuggets with Wisdom</h4>
+            <p>A community podcast diving into the menstrual journey, mental health, nutrition, self-care, and engaging boys as allies.</p>
+            <ul class="program-points">
+              <li><i class="fas fa-check"></i> Expert-led conversations</li>
+              <li><i class="fas fa-check"></i> Youth-friendly health education</li>
+            </ul>
+            <button class="btn btn-link-theme" data-bs-toggle="modal" data-bs-target="#programModal3">Learn More <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 program-item" data-category="health" data-aos="fade-up">
+        <div class="program-card">
+          <div class="program-img">
+            <img src="assets/program-psychosocial.jpg" alt="Caregivers Summit" />
+            <span class="program-tag annual-tag">Annual</span>
+          </div>
+          <div class="program-body">
+            <div class="program-icon"><i class="fas fa-brain"></i></div>
+            <h4>Psycho-Social Support &amp; Caregivers Summit</h4>
+            <p>Reducing caregiver burnout and breaking neurodivergence stigmas through annual mental health platforms.</p>
+            <ul class="program-points">
+              <li><i class="fas fa-check"></i> 200 caregivers/year target</li>
+              <li><i class="fas fa-check"></i> Ages 13–25 adolescent girls</li>
+            </ul>
+            <button class="btn btn-link-theme" data-bs-toggle="modal" data-bs-target="#programModal4">Learn More <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 program-item" data-category="economy" data-aos="fade-up" data-aos-delay="100">
+        <div class="program-card">
+          <div class="program-img">
+            <img src="assets/program-agriculture.jpg" alt="Economic Empowerment" />
+            <span class="program-tag active-tag">Active</span>
+          </div>
+          <div class="program-body">
+            <div class="program-icon"><i class="fas fa-seedling"></i></div>
+            <h4>Agriculture &amp; Economic Empowerment</h4>
+            <p>Climate-smart farming and vocational training (soap making, beadwork, crafts) for immediate financial independence.</p>
+            <ul class="program-points">
+              <li><i class="fas fa-check"></i> Modern farming techniques</li>
+              <li><i class="fas fa-check"></i> Hands-on vocational skills</li>
+            </ul>
+            <button class="btn btn-link-theme" data-bs-toggle="modal" data-bs-target="#programModal5">Learn More <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 program-item" data-category="media health" data-aos="fade-up" data-aos-delay="200">
+        <div class="program-card">
+          <div class="program-img">
+            <img src="assets/program-media.jpg" alt="Media Advocacy" />
+            <span class="program-tag active-tag">Active</span>
+          </div>
+          <div class="program-body">
+            <div class="program-icon"><i class="fas fa-tv"></i></div>
+            <h4>Media Advocacy</h4>
+            <p>Championing mental health, suicide awareness, and disability inclusion across TV and radio platforms.</p>
+            <ul class="program-points">
+              <li><i class="fas fa-check"></i> TV &amp; radio features</li>
+              <li><i class="fas fa-check"></i> Stigma-breaking campaigns</li>
+            </ul>
+            <button class="btn btn-link-theme" data-bs-toggle="modal" data-bs-target="#programModal6">Learn More <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CISCO COURSES -->
+    <div class="cisco-courses mt-5" data-aos="fade-up">
+      <div class="cisco-courses-header">
+        <div class="cisco-badge">
+          <i class="fas fa-certificate"></i>
+          <span>Official Partner</span>
+        </div>
+        <h3>Cisco Networking Academy <span class="text-gold">Courses</span></h3>
+        <p>
+          Through our partnership with Cisco Networking Academy, our Mama Angaza learners
+          gain globally recognized certifications that unlock careers in tech.
+        </p>
+      </div>
+
+      <div class="row g-4 cisco-courses-grid">
+        <div class="col-md-6 col-lg-3" data-aos="fade-up">
+          <div class="cisco-course-card">
+            <div class="cisco-course-icon"><i class="fas fa-shield-halved"></i></div>
+            <h5>Cybersecurity Essentials</h5>
+            <p>Protect systems, networks &amp; data from digital threats — foundational skills for every modern workplace.</p>
+            <span class="cisco-course-tag">Certification</span>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+          <div class="cisco-course-card">
+            <div class="cisco-course-icon"><i class="fas fa-network-wired"></i></div>
+            <h5>CCNA</h5>
+            <p>Cisco Certified Network Associate — the gold-standard credential for networking professionals worldwide.</p>
+            <span class="cisco-course-tag">Certification</span>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+          <div class="cisco-course-card">
+            <div class="cisco-course-icon"><i class="fas fa-chart-line"></i></div>
+            <h5>Data Science</h5>
+            <p>Analyze data, uncover insights, and build models that drive smarter decisions across every industry.</p>
+            <span class="cisco-course-tag">Certification</span>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+          <div class="cisco-course-card">
+            <div class="cisco-course-icon"><i class="fab fa-python"></i></div>
+            <h5>Python Programming</h5>
+            <p>Master the world's most in-demand coding language — the gateway to automation, AI, and web development.</p>
+            <span class="cisco-course-tag">Certification</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cisco-cta">
+        <p class="mb-2"><strong>Ready to launch your tech career?</strong> Sponsored spots are available for young mothers and brilliant students.</p>
+        <a href="#contact" class="btn btn-theme" id="enrollCourseBtn">
+          <i class="fas fa-graduation-cap me-2"></i>Enroll or Sponsor a Learner
+        </a>
+      </div>
+    </div>
+
+    <div class="fundraising-box mt-5" data-aos="fade-up">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-5">
+          <span class="section-label">Support Our Mission</span>
+          <h3 class="mb-2">Laptops for Mama Angaza Learners</h3>
+          <p class="mb-0">Our biggest challenge is the shortage of laptops and compatible devices. Help us bridge the digital divide.</p>
+        </div>
+        <div class="col-lg-7">
+          <div class="progress-item">
+            <div class="progress-label"><span>Laptops Funded</span><span>68%</span></div>
+            <div class="progress"><div class="progress-bar" style="width:68%"></div></div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label"><span>Internet Connectivity</span><span>45%</span></div>
+            <div class="progress"><div class="progress-bar alt" style="width:45%"></div></div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label"><span>Scholarships</span><span>32%</span></div>
+            <div class="progress"><div class="progress-bar plum" style="width:32%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRESENCE PANEL with MAP -->
+<section class="section map-section" id="map">
+  <div class="container">
+
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">Where We Work</span>
+      <h2 class="section-title">Our <span class="text-gold">Footprint</span> in Kenya</h2>
+      <p class="section-subtitle mx-auto">
+        We operate in <strong>Nairobi County</strong> and <strong>Kitui County (Ikutha)</strong> — reaching communities
+        across Kenya through mental health, menstrual dignity, disability advocacy, and accessible education.
+      </p>
+    </div>
+
+    <div class="presence-stats" data-aos="fade-up">
+      <div class="presence-stat">
+        <i class="fas fa-map-marked-alt"></i>
+        <div>
+          <strong class="counter-mini" data-target="2">0</strong>
+          <span>Counties</span>
+        </div>
+      </div>
+      <div class="presence-stat">
+        <i class="fas fa-school"></i>
+        <div>
+          <strong class="counter-mini" data-target="8">0</strong>
+          <span>Partner Schools</span>
+        </div>
+      </div>
+      <div class="presence-stat">
+        <i class="fas fa-users"></i>
+        <div>
+          <strong class="counter-mini" data-target="500">0</strong>
+          <span>Lives Touched</span>
+        </div>
+      </div>
+      <div class="presence-stat">
+        <i class="fas fa-calendar-check"></i>
+        <div>
+          <strong class="counter-mini" data-target="20">0</strong>
+          <span>Events Held</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="google-map-wrapper mb-5" data-aos="zoom-in">
+      <div id="googleMap" class="google-map"></div>
+    </div>
+
+    <div class="presence-filters text-center mb-5" data-aos="fade-up">
+      <button class="presence-filter active" data-filter="all">
+        <i class="fas fa-globe-africa me-1"></i> All Locations
+      </button>
+      <button class="presence-filter" data-filter="nairobi">
+        <i class="fas fa-city me-1"></i> Nairobi
+      </button>
+      <button class="presence-filter" data-filter="kitui">
+        <i class="fas fa-mountain me-1"></i> Kitui
+      </button>
+    </div>
+
+    <div class="row g-4" id="presenceGrid"></div>
+
+  </div>
+</section>
+
+<!-- Presence detail modal -->
+<div class="modal fade" id="presenceModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content presence-modal-content">
+      <div class="presence-modal-img" id="presenceModalImg"></div>
+      <button class="btn-close presence-modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-body">
+        <span class="presence-modal-tag" id="presenceModalTag"></span>
+        <h3 class="presence-modal-title" id="presenceModalTitle"></h3>
+        <p class="presence-modal-desc" id="presenceModalDesc"></p>
+        <div class="presence-modal-stats" id="presenceModalStats"></div>
+        <div class="presence-modal-footer">
+          <a href="#contact" class="btn btn-theme" data-bs-dismiss="modal">
+            <i class="fas fa-hand-holding-heart me-2"></i>Get Involved Here
+          </a>
+          <button class="btn btn-theme-outline" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#donateModal">
+            <i class="fas fa-heart me-2"></i>Support This Site
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section class="section gallery-section" id="gallery">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">Moments of Impact</span>
+      <h2 class="section-title">Our <span class="text-gold">Gallery</span></h2>
+    </div>
+    <div class="gallery-grid" id="galleryGrid">
+      <div class="gallery-item" data-aos="zoom-in"><img src="assets/gallery-1.jpg" alt="Gallery" /><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+      <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200"><img src="assets/hero.jpeg" alt="Gallery" /><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+      <div class="gallery-item" data-aos="zoom-in" data-aos-delay="250"><img src="assets/gallery-6.png" alt="Gallery" /><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+      <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300"><img src="assets/gallery-7.jpg" alt="Gallery" /><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+      <div class="gallery-item" data-aos="zoom-in" data-aos-delay="50"><img src="assets/gallery-10.jpg" alt="Gallery" /><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+      <div class="gallery-item" data-aos="zoom-in" data-aos-delay="150"><img src="assets/gallery-12.jpg" alt="Gallery" /><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+      <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200"><img src="assets/gallery-13.jpg" alt="Gallery" /><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+      <div class="gallery-item" data-aos="zoom-in" data-aos-delay="350"><img src="assets/gallery-16.jpg" alt="Gallery" /><div class="gallery-overlay"><i class="fas fa-search-plus"></i></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox">
+  <span class="lightbox-close">&times;</span>
+  <img class="lightbox-img" src="" alt="preview" />
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="section testimonials-section" id="testimonials">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">Voices of Change</span>
+      <h2 class="section-title">What Our <span class="text-gold">Community Says</span></h2>
+      <p class="section-subtitle mx-auto">
+        Real stories from the young mothers, students, and caregivers whose lives have been transformed through our programs.
+      </p>
+    </div>
+
+    <div id="testimonialCarousel" class="carousel slide testimonial-carousel" data-bs-ride="carousel" data-aos="fade-up">
+      <div class="carousel-inner">
+
+        <div class="carousel-item active">
+          <div class="testimonial-card-large">
+            <div class="testimonial-img-wrap">
+              <img src="assets/harun.jpg" alt="Harun" />
+            </div>
+            <div class="testimonial-content">
+              <i class="fas fa-quote-left testimonial-quote"></i>
+              <p class="testimonial-text-large">
+                Hello, I'm <strong>Harun</strong>, a new cybersecurity student. I participated in a Cisco Cybersecurity
+                class conducted in conjunction with the Mama Angaza Project. During the program, I learned
+                the fundamentals of cybersecurity — including basic concepts of network security, common cyber
+                threats, safe online practices, and how to protect systems and personal data. The training
+                gave me a strong foundation in understanding how cyber attacks happen and the importance of
+                securing digital environments. Special thanks to the Talk to Mutendwah Foundation for making
+                this opportunity possible.
+              </p>
+              <div class="testimonial-author-large">
+                <strong>Harun</strong>
+                <span>Mama Angaza Project Student · Cisco Cybersecurity</span>
+                <div class="testimonial-badge">
+                  <i class="fas fa-certificate"></i> Cisco Networking Academy
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="testimonial-card-large">
+            <div class="testimonial-img-wrap">
+              <img src="assets/testimonial-1.png" alt="Sylvester" />
+            </div>
+            <div class="testimonial-content">
+              <i class="fas fa-quote-left testimonial-quote"></i>
+              <p class="testimonial-text-large">
+                Hello, I'm <strong>Sylvester</strong>, a student from the Mama Angaza project. I learnt introduction
+                to cybersecurity and got a Cisco certificate. At first I thought cybersecurity was all about
+                hacking — NO. It's about protecting individuals, organisations, and governments from digital
+                attacks. I would like you to join the project to protect our society. You are all welcome.
+              </p>
+              <div class="testimonial-author-large">
+                <strong>Sylvester</strong>
+                <span>Mama Angaza Graduate · Cisco Certified</span>
+                <div class="testimonial-badge">
+                  <i class="fas fa-certificate"></i> Cisco Networking Academy
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="testimonial-card-large">
+            <div class="testimonial-img-wrap">
+              <img src="assets/testimonial-2.png" alt="Millicent" />
+            </div>
+            <div class="testimonial-content">
+              <i class="fas fa-quote-left testimonial-quote"></i>
+              <p class="testimonial-text-large">
+                I, <strong>Millicent Mokeira</strong>, would like to thank Mama Angaza Project for this chance
+                to help me learn cybersecurity for the betterment of my future. Now I have knowledge about
+                cybersecurity. Thanks once again and may you continue helping others too.
+              </p>
+              <div class="testimonial-author-large">
+                <strong>Millicent Mokeira</strong>
+                <span>Mama Angaza Beneficiary · Cisco Certified</span>
+                <div class="testimonial-badge">
+                  <i class="fas fa-certificate"></i> Cisco Networking Academy
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="testimonial-card-large">
+            <div class="testimonial-img-wrap">
+              <img src="assets/alfred.jpg" alt="Alfred" />
+            </div>
+            <div class="testimonial-content">
+              <i class="fas fa-quote-left testimonial-quote"></i>
+              <p class="testimonial-text-large">
+                My name is <strong>Alfred</strong>, and I was successfully selected to join the Mama Angaza Project's
+                Basic Cybersecurity Training Program, powered by the <strong>Cisco Networking Academy</strong>.
+                This opportunity came at exactly the right moment in my life. I'm learning how to secure
+                networks, recognize digital threats, and protect data — skills that are in high demand
+                across every industry today. I'm ready to build a safer digital future for my community.
+              </p>
+              <div class="testimonial-author-large">
+                <strong>Alfred</strong>
+                <span>Mama Angaza Project · Cisco Cybersecurity Training</span>
+                <div class="testimonial-badge">
+                  <i class="fas fa-certificate"></i> Cisco Networking Academy
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="testimonial-card-large">
+            <div class="testimonial-img-wrap">
+              <img src="assets/kennedy.jpg" alt="Kennedy Musembi" />
+            </div>
+            <div class="testimonial-content">
+              <i class="fas fa-quote-left testimonial-quote"></i>
+              <p class="testimonial-text-large">
+                I'm <strong>Kennedy Musembi</strong>, and I've just been accepted into the Mama Angaza Project's
+                Basic Cybersecurity Training Program through the <strong>Cisco Networking Academy</strong>.
+                I'm grateful to the Talk To Mutendwah Foundation for opening this door. My goal is to
+                become a certified cybersecurity professional and help protect our growing digital economy —
+                and eventually mentor others from my community to follow the same path.
+              </p>
+              <div class="testimonial-author-large">
+                <strong>Kennedy Musembi</strong>
+                <span>Mama Angaza Project · Cisco Cybersecurity Training</span>
+                <div class="testimonial-badge">
+                  <i class="fas fa-certificate"></i> Cisco Networking Academy
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="testimonial-card-large">
+            <div class="testimonial-img-wrap">
+              <img src="assets/testimonial-3.png" alt="Caregiver" />
+            </div>
+            <div class="testimonial-content">
+              <i class="fas fa-quote-left testimonial-quote"></i>
+              <p class="testimonial-text-large">
+                The Caregivers Summit gave me a safe space I never knew I needed. For the first time,
+                I felt seen and understood as a mother raising a neurodivergent daughter. The psycho-social
+                support has changed how I show up for my family — and for myself.
+              </p>
+              <div class="testimonial-author-large">
+                <strong>A Caregiver</strong>
+                <span>Psycho-Social Support Program</span>
+                <div class="testimonial-badge">
+                  <i class="fas fa-heart"></i> Caregivers Summit
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="testimonial-card-large">
+            <div class="testimonial-img-wrap">
+              <img src="assets/mirriam.jpg" alt="Mirriam" />
+            </div>
+            <div class="testimonial-content">
+              <i class="fas fa-quote-left testimonial-quote"></i>
+              <p class="testimonial-text-large">
+                I'm <strong>Mirriam</strong>, a 23-year-old mother of two. Before joining the Mama Angaza Project, I had
+                never written a line of code. Through the <strong>Python Programming</strong> course at the Cisco
+                Networking Academy, I built my first automation scripts, then small web apps. I now work
+                part-time as a junior developer — earning my own income and inspiring my children to
+                dream bigger. The Foundation didn't just teach me tech; it taught me that I matter.
+              </p>
+              <div class="testimonial-author-large">
+                <strong>Mirriam</strong>
+                <span>Mama Angaza Graduate · Cisco Python Programming</span>
+                <div class="testimonial-badge">
+                  <i class="fab fa-python"></i> Cisco Networking Academy
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <button class="carousel-control-prev testimonial-control" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="carousel-control-next testimonial-control" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+
+      <div class="carousel-indicators testimonial-indicators">
+        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2"></button>
+        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="3"></button>
+        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="4"></button>
+        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="5"></button>
+        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="6"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATES -->
+<section class="section certificates-section" id="certificates">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">Proof of Impact</span>
+      <h2 class="section-title">Graduate <span class="text-gold">Certificates</span></h2>
+      <p class="section-subtitle mx-auto">
+        Certified achievements from our Mama Angaza and Mentorship programs. Names are automatically masked to protect our graduates' privacy.
+      </p>
+    </div>
+
+    <div class="row g-4" id="certificatesGrid"></div>
+
+    <div class="text-center mt-5" data-aos="fade-up">
+      <small class="text-muted">
+        <i class="fas fa-shield-alt me-1"></i>
+        Privacy first — all names shown on this page are automatically masked for the safety of our graduates.
+      </small>
+    </div>
+  </div>
+</section>
+
+<!-- Certificate fullscreen modal -->
+<div class="modal fade" id="certificateModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content certificate-modal-content">
+      <button class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" style="z-index:10; filter: invert(1);"></button>
+      <div class="certificate-modal-body">
+        <img id="certificateModalImg" src="assets/cert1.png" alt="Certificate" />
+        <div class="certificate-modal-overlay" id="certificateModalOverlay"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     RESOURCES / DOWNLOADS
+     ═══════════════════════════════════════════════════════════ -->
+<section class="section resources-section" id="resources">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">Downloads</span>
+      <h2 class="section-title">Our <span class="text-gold">Resources</span></h2>
+      <p class="section-subtitle mx-auto">
+        Access our official documents to learn more about our work, programs, and impact. Free to download and share.
+      </p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+
+      <!-- Resource 1 — Foundation Profile -->
+      <div class="col-md-6 col-lg-5" data-aos="fade-up">
+        <div class="resource-card">
+          <div class="resource-preview pdf-placeholder">
+            <i class="fas fa-file-pdf resource-pdf-icon"></i>
+          </div>
+          <div class="resource-body">
+            <span class="resource-type"><i class="fas fa-book"></i> Full Profile</span>
+            <h3 class="resource-title">Foundation Profile</h3>
+            <p class="resource-desc">
+              Comprehensive overview of Talk To Mutendwah Foundation — our executive summary, target
+              beneficiaries, project activities, SWOT analysis, mission &amp; vision, strategic goals,
+              budget framework, M&amp;E approach, and long-term sustainability plan.
+            </p>
+            <div class="resource-meta">
+              <span><i class="fas fa-file-alt"></i> 21 Pages</span>
+              <span><i class="fas fa-calendar-alt"></i> 2021–2025+</span>
+            </div>
+            <div class="resource-actions">
+              <a href="assets/documents/foundation-profile.pdf"
+                 target="_blank"
+                 rel="noopener"
+                 class="btn-resource btn-resource-outline">
+                <i class="fas fa-eye"></i> Preview
+              </a>
+              <a href="assets/documents/foundation-profile.pdf"
+                 download
+                 class="btn-resource btn-resource-primary">
+                <i class="fas fa-download"></i> Download
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resource 2 — Wellness in Flow Profile -->
+      <div class="col-md-6 col-lg-5" data-aos="fade-up" data-aos-delay="100">
+        <div class="resource-card">
+          <div class="resource-preview pdf-placeholder">
+            <i class="fas fa-file-pdf resource-pdf-icon"></i>
+          </div>
+          <div class="resource-body">
+            <span class="resource-type"><i class="fas fa-heartbeat"></i> Program Profile</span>
+            <h3 class="resource-title">Wellness in Flow Profile</h3>
+            <p class="resource-desc">
+              An in-depth look at our flagship "Wellness in Flow" initiative — empowering adolescent
+              neurodivergent girls (ages 13–22) through menstrual health education, nutrition for
+              hormonal balance, caregiver engagement, and inclusive mental wellness support.
+            </p>
+            <div class="resource-meta">
+              <span><i class="fas fa-file-alt"></i> 8 Pages</span>
+              <span><i class="fas fa-map-marker-alt"></i> Nairobi · Kitui</span>
+            </div>
+            <div class="resource-actions">
+              <a href="assets/documents/wellness-in-flow-profile.pdf"
+                 target="_blank"
+                 rel="noopener"
+                 class="btn-resource btn-resource-outline">
+                <i class="fas fa-eye"></i> Preview
+              </a>
+              <a href="assets/documents/wellness-in-flow-profile.pdf"
+                 download
+                 class="btn-resource btn-resource-primary">
+                <i class="fas fa-download"></i> Download
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Help note -->
+    <div class="resources-help" data-aos="fade-up">
+      <i class="fas fa-hand-holding-heart"></i>
+      <p>
+        Interested in partnering, sponsoring, or supporting our programs?
+        <a href="#contact">Get in touch with us</a> — we'd love to hear from you.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section class="section partners-section" id="partners">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">Trusted By</span>
+      <h2 class="section-title">Our <span class="text-gold">Partners</span> &amp; Accreditations</h2>
+      <p class="section-subtitle mx-auto">
+        We work alongside leading institutions, government bodies, and global networks to multiply our impact
+        and reach more young women across Kenya.
+      </p>
+    </div>
+
+    <div class="partners-grid" data-aos="fade-up">
+      <div class="partner-card" data-category="tech">
+        <div class="partner-icon"><i class="fas fa-network-wired"></i></div>
+        <h6>Cisco</h6>
+        <span>Networking Academy Partner</span>
+      </div>
+      <div class="partner-card" data-category="tech">
+        <div class="partner-icon"><i class="fas fa-tower-broadcast"></i></div>
+        <h6>Huawei</h6>
+        <span>ICT Academy Partner</span>
+      </div>
+      <div class="partner-card" data-category="tech">
+        <div class="partner-icon"><i class="fas fa-tower-broadcast"></i></div>
+        <h6>University of Cambridge</h6>
+        <span>Institution of higher learning</span>
+      </div>
+      <div class="partner-card" data-category="tech">
+        <div class="partner-icon"><i class="fas fa-satellite-dish"></i></div>
+        <h6>AFRALTI</h6>
+        <span>Telecommunications Institute</span>
+      </div>
+      <div class="partner-card" data-category="gov">
+        <div class="partner-icon"><i class="fas fa-microchip"></i></div>
+        <h6>Ministry of ICT</h6>
+        <span>Kenya Government</span>
+      </div>
+      <div class="partner-card" data-category="gov">
+        <div class="partner-icon"><i class="fas fa-globe-africa"></i></div>
+        <h6>Kazi Majuu</h6>
+        <span>Ministry of Foreign Affairs</span>
+      </div>
+      <div class="partner-card" data-category="gov">
+        <div class="partner-icon"><i class="fas fa-briefcase"></i></div>
+        <h6>Ajira Kenya</h6>
+        <span>Digital Jobs Program</span>
+      </div>
+      <div class="partner-card" data-category="gov">
+        <div class="partner-icon"><i class="fas fa-users"></i></div>
+        <h6>State Dept. of Youth</h6>
+        <span>Youth Affairs Kenya</span>
+      </div>
+      <div class="partner-card" data-category="gov">
+        <div class="partner-icon"><i class="fas fa-heartbeat"></i></div>
+        <h6>Ministry of Health</h6>
+        <span>Dept. of Reproductive Health</span>
+      </div>
+      <div class="partner-card" data-category="health">
+        <div class="partner-icon"><i class="fas fa-wheelchair"></i></div>
+        <h6>NCPWD</h6>
+        <span>Council for Persons with Disabilities</span>
+      </div>
+      <div class="partner-card" data-category="health">
+        <div class="partner-icon"><i class="fas fa-globe"></i></div>
+        <h6>WHO — IBP Network</h6>
+        <span>Reproductive Health Network</span>
+      </div>
+      <div class="partner-card" data-category="private">
+        <div class="partner-icon"><i class="fas fa-handshake"></i></div>
+        <h6>KEPSA</h6>
+        <span>Kenya Private Sector Alliance</span>
+      </div>
+      <div class="partner-card featured" data-category="tech">
+        <div class="partner-icon"><i class="fas fa-certificate"></i></div>
+        <h6>Cisco Networking Academy</h6>
+        <span>Flagship Educational Partner</span>
+        <div class="partner-flag">Flagship</div>
+      </div>
+    </div>
+
+    <div class="partners-cta" data-aos="fade-up">
+      <div class="partners-cta-content">
+        <i class="fas fa-handshake-angle"></i>
+        <div>
+          <h4>Partner With Us</h4>
+          <p class="mb-0">Join our network of changemakers. Together we can reach more young women across Kenya.</p>
+        </div>
+        <a href="#contact" class="btn btn-theme" id="partnerCtaBtn">
+          <i class="fas fa-envelope me-2"></i>Become a Partner
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section team-section" id="team">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">The People Behind the Mission</span>
+      <h2 class="section-title">Meet Our <span class="text-gold">Team</span></h2>
+      <p class="section-subtitle mx-auto">
+        A dedicated team of mental health professionals, educators, and advocates working together to serve our community.
+      </p>
+    </div>
+    <div class="row g-4 justify-content-center">
+
+      <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up">
+        <div class="team-card">
+          <div class="team-img"><img src="assets/team-1.jpg" alt="Faith Mbusi" /></div>
+          <h5>Faith Mbusi</h5>
+          <p>Founder, Director &amp; Head of Mental Health</p>
+          <div class="team-social">
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="mailto:info@talktotmutendwah.org" aria-label="Email"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+        <div class="team-card">
+          <div class="team-img"><img src="assets/kavata.jpeg" alt="Victoria Kavata" /></div>
+          <h5>Victoria Kavata</h5>
+          <p>Administrator</p>
+          <div class="team-social">
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="mailto:info@talktotmutendwah.org" aria-label="Email"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+        <div class="team-card">
+          <div class="team-img"><img src="assets/godwin.jpeg" alt="Godwin Kwanya" /></div>
+          <h5>Godwin Kwanya</h5>
+          <p>Education Lead</p>
+          <div class="team-social">
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="mailto:info@talktotmutendwah.org" aria-label="Email"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+        <div class="team-card">
+          <div class="team-img"><img src="assets/laura.png" alt="Laura Jepkorir" /></div>
+          <h5>Laura Jepkorir</h5>
+          <p>Teen Menstrual Ambassador</p>
+          <div class="team-social">
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="mailto:info@talktotmutendwah.org" aria-label="Email"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EVENT COUNTDOWN -->
+<section class="countdown-section">
+  <div class="container">
+    <div class="countdown-box" data-aos="zoom-in">
+      <span class="section-label">Next Big Event</span>
+      <h3>Caregivers Summit 2026</h3>
+      <p>Psycho-Social Support for 200 caregivers and adolescent girls.</p>
+      <div id="countdown" class="countdown">
+        <div class="countdown-item"><strong id="cd-days">00</strong><span>Days</span></div>
+        <div class="countdown-item"><strong id="cd-hours">00</strong><span>Hours</span></div>
+        <div class="countdown-item"><strong id="cd-mins">00</strong><span>Minutes</span></div>
+        <div class="countdown-item"><strong id="cd-secs">00</strong><span>Seconds</span></div>
+      </div>
+      <a href="#contact" class="btn btn-theme" id="registerInterestBtn">Register Interest</a>
+    </div>
+  </div>
+</section>
+
+<!-- DONATION SLIDER -->
+<section class="section donation-calc-section">
+  <div class="container">
+    <div class="row g-4 align-items-center">
+      <div class="col-lg-6" data-aos="fade-right">
+        <span class="section-label">Your Impact</span>
+        <h2 class="section-title">See What Your <span class="text-gold">Donation Does</span></h2>
+        <p>Drag the slider and watch your impact grow in real-time.</p>
+        <div class="slider-box">
+          <label for="donationSlider">Amount (KSh)</label>
+          <input type="range" id="donationSlider" min="100" max="100000" step="100" value="1000" />
+          <div class="slider-value">KSh <span id="sliderValue">1,000</span></div>
+          <div class="impact-cards">
+            <div class="impact-mini">
+              <i class="fas fa-venus"></i>
+              <strong id="impactPads">2</strong>
+              <span>Eco-friendly pads</span>
+            </div>
+            <div class="impact-mini">
+              <i class="fas fa-laptop"></i>
+              <strong id="impactLaptops">0.1</strong>
+              <span>Laptop contribution</span>
+            </div>
+            <div class="impact-mini">
+              <i class="fas fa-brain"></i>
+              <strong id="impactSessions">1</strong>
+              <span>Therapy sessions</span>
+            </div>
+            <div class="impact-mini">
+              <i class="fas fa-seedling"></i>
+              <strong id="impactFarms">1</strong>
+              <span>Farm kit share</span>
+            </div>
+          </div>
+          <button class="btn btn-theme btn-lg w-100 mt-4" data-bs-toggle="modal" data-bs-target="#donateModal">
+            <i class="fas fa-heart me-2"></i>Donate KSh <span id="donateAmount">1,000</span>
+          </button>
+        </div>
+      </div>
+      <div class="col-lg-6" data-aos="fade-left">
+        <div class="impact-story-card">
+          <i class="fas fa-quote-left"></i>
+          <p><em>"Every shilling you give writes a new chapter — for a young mother learning code, a girl staying in school, a caregiver finally feeling heard."</em></p>
+          <strong>— Faith Mbusi, Founder</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+  <div class="container">
+    <div class="newsletter-box" data-aos="zoom-in">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <h3><i class="fas fa-envelope-open-text me-2"></i>Stay in the Loop</h3>
+          <p class="mb-0">Subscribe to receive updates on our programs, events, and impact stories.</p>
+        </div>
+        <div class="col-lg-5">
+          <form id="newsletterForm" class="d-flex gap-2">
+            <input type="email" class="form-control" placeholder="Your email address" required />
+            <button class="btn btn-theme" type="submit">Subscribe</button>
+          </form>
+          <small class="newsletter-msg"></small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact-section" id="contact">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">Get In Touch</span>
+      <h2 class="section-title">Contact <span class="text-gold">Us</span></h2>
+      <p class="section-subtitle mx-auto">Have a question, want to partner, or need support? We'd love to hear from you.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-5" data-aos="fade-right">
+        <div class="contact-info">
+          <div class="contact-card">
+            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div><h6>Location</h6><p>Nairobi County &amp; Kitui County (Ikutha), Kenya</p></div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+            <div><h6>Email</h6><p>info@talktotmutendwah.org</p></div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon"><i class="fas fa-phone"></i></div>
+            <div><h6>Phone</h6><p>+254 717 369 540<br />+254 714 491 403</p></div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon"><i class="fas fa-clock"></i></div>
+            <div><h6>Office Hours</h6><p>Mon – Fri: 8:00 AM – 5:00 PM</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7" data-aos="fade-left">
+        <form id="contactForm" class="contact-form" novalidate>
+          <input type="hidden" name="access_key" value="1d073c50-a769-4200-b292-0eec1daecdb9" />
+          <input type="hidden" name="subject" value="New message from Talk To Mutendwah Website" />
+          <input type="hidden" name="from_name" value="Talk To Mutendwah Website" />
+          <input type="checkbox" name="botcheck" class="d-none" style="display:none" />
+          <div class="row g-3">
+            <div class="col-md-6">
+              <input type="text" class="form-control" name="name" placeholder="Full Name *" required />
+              <div class="invalid-feedback">Please enter your name.</div>
+            </div>
+            <div class="col-md-6">
+              <input type="email" class="form-control" name="email" placeholder="Email Address *" required />
+              <div class="invalid-feedback">Please enter a valid email.</div>
+            </div>
+            <div class="col-md-6">
+              <input type="tel" class="form-control" name="phone" placeholder="Phone Number" />
+            </div>
+            <div class="col-md-6">
+              <select class="form-select" name="topic" required>
+                <option value="">I'm contacting about... *</option>
+                <option>General Inquiry</option>
+                <option>Donation / Sponsorship</option>
+                <option>Volunteering</option>
+                <option>Partnership</option>
+                <option>Program Enrollment</option>
+                <option>Media / Press</option>
+              </select>
+              <div class="invalid-feedback">Please select a topic.</div>
+            </div>
+            <div class="col-12">
+              <textarea class="form-control" name="message" rows="5" placeholder="Your Message *" required></textarea>
+              <div class="invalid-feedback">Please write a message.</div>
+            </div>
+            <div class="col-12 d-flex align-items-center justify-content-between flex-wrap gap-3">
+              <button type="submit" class="btn btn-theme btn-lg" id="contactSubmit">
+                <span class="btn-text"><i class="fas fa-paper-plane me-2"></i>Send Message</span>
+                <span class="btn-loading d-none"><i class="fas fa-spinner fa-spin me-2"></i>Sending...</span>
+              </button>
+              <small class="text-muted">We reply within 24 hours.</small>
+            </div>
+          </div>
+          <div class="form-alert mt-3" id="contactAlert"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <img src="assets/logo.png" alt="Talk To Mutendwah Foundation" class="footer-logo" />
+        <p class="mt-3">
+          A registered Kenyan non-profit building a resilient society where young women, mothers, and caregivers
+          are mentally whole, economically self-reliant, and equipped to thrive. Operating in Nairobi County and Kitui County (Ikutha).
+        </p>
+        <p class="footer-tagline"><em>"Everyone can be great because everyone can serve."</em></p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6>Quick Links</h6>
+        <ul class="footer-links">
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#programs">Programs</a></li>
+          <li><a href="#impact">Impact</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#certificates">Certificates</a></li>
+          <li><a href="#resources">Resources</a></li>
+          <li><a href="#partners">Partners</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-3">
+        <h6>Our Programs</h6>
+        <ul class="footer-links">
+          <li><a href="#programs">School Mentorship</a></li>
+          <li><a href="#programs">Mama Angaza</a></li>
+          <li><a href="#programs">Nuggets with Wisdom</a></li>
+          <li><a href="#programs">Caregivers Summit</a></li>
+          <li><a href="#programs">Agriculture &amp; Economy</a></li>
+          <li><a href="#programs">Media Advocacy</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3">
+        <h6>Donate</h6>
+        <div class="donate-info">
+          <p class="mb-2"><strong><i class="fas fa-mobile-alt me-2"></i>M-Pesa</strong><br />Paybill: <strong>522533</strong><br />Account: <strong>7766759</strong></p>
+          <p class="mb-0"><strong><i class="fas fa-university me-2"></i>KCB Bank</strong><br />Lang'ata Branch<br />Acc: <strong>1322072221</strong><br />SWIFT: KCBLKENX</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="mb-0">© <span id="year"></span> Talk To Mutendwah Foundation · Soc/77981. All rights reserved.</p>
+      <p class="mb-0">Designed with <i class="fas fa-heart text-gold"></i> for impact.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<button id="backToTop" class="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/254717369540" class="floating-whatsapp" target="_blank" aria-label="WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- PROGRAM MODALS -->
+<div class="modal fade" id="programModal1" tabindex="-1"><div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content">
+  <div class="modal-header"><h5 class="modal-title">School Mentorship Project</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <img src="assets/program-mentorship.jpg" class="img-fluid rounded mb-3" alt="Mentorship" />
+    <p>Our School Mentorship Project guides students through the critical transitional years of high school by offering active, school-based mentorship modules focused on career development, practical life skills, self-esteem, and decision-making.</p>
+    <h6 class="mt-3">What we offer:</h6>
+    <ul><li>Structured career development sessions</li><li>Practical life skills training</li><li>Self-esteem &amp; decision-making workshops</li><li>Mentor-mentee matching with professionals</li></ul>
+    <p class="mb-0"><strong>Goal:</strong> Scale to more local educational institutions over the next 1–2 years.</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-theme" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#volunteerModal">Volunteer as Mentor</button>
+    <button class="btn btn-theme-outline" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#donateModal">Support This Program</button>
+  </div>
+</div></div></div>
+
+<div class="modal fade" id="programModal2" tabindex="-1"><div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content">
+  <div class="modal-header"><h5 class="modal-title">Mama Angaza — Tech &amp; Life Skills</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <img src="assets/program-mama-angaza.jpg" class="img-fluid rounded mb-3" alt="Mama Angaza" />
+    <p>Mama Angaza bridges the digital divide by equipping young mothers with globally recognized tech certifications through <strong>Cisco Networking Academy</strong> and <strong>Huawei</strong>.</p>
+    <h6 class="mt-3">Training tracks:</h6>
+    <ul><li>Cybersecurity essentials</li><li>Web design &amp; development</li><li>Artificial Intelligence fundamentals</li><li>Digital literacy &amp; life skills</li></ul>
+    <p><strong>Bonus:</strong> We sponsor brilliant, underprivileged students for advanced IT courses to boost their economic mobility.</p>
+    <p class="mb-0"><strong>Our biggest need:</strong> laptops, compatible devices, internet connectivity, mentorship, and scholarships.</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-theme" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#donateModal">Donate a Laptop</button>
+    <a href="#contact" class="btn btn-theme-outline" data-bs-dismiss="modal">Partner With Us</a>
+  </div>
+</div></div></div>
+
+<div class="modal fade" id="programModal3" tabindex="-1"><div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content">
+  <div class="modal-header"><h5 class="modal-title">Nuggets with Wisdom with Mutendwah</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <img src="assets/program-podcast.jpg" class="img-fluid rounded mb-3" alt="Podcast" />
+    <p>A community podcast diving into the menstrual journey among young people — breaking silence and stigma with expert-led conversations.</p>
+    <h6 class="mt-3">Topics covered:</h6>
+    <ul><li>Menstrual disorders &amp; cycle-linked nutrition</li><li>Mental health &amp; self-care</li><li>Engaging boys and men as allies</li><li>Myth-busting around reproductive health</li></ul>
+  </div>
+  <div class="modal-footer"><button class="btn btn-theme" data-bs-dismiss="modal">Listen on Spotify</button></div>
+</div></div></div>
+
+<div class="modal fade" id="programModal4" tabindex="-1"><div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content">
+  <div class="modal-header"><h5 class="modal-title">Psycho-Social Support &amp; Caregivers Summit</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <img src="assets/program-psychosocial.jpg" class="img-fluid rounded mb-3" alt="Summit" />
+    <p>Our annual Caregivers Summit provides intensive mental health and health awareness platforms for 200 caregivers and adolescent girls (ages 13–25).</p>
+    <h6 class="mt-3">Focus areas:</h6>
+    <ul><li>Reducing caregiver burnout</li><li>Breaking neurodivergence stigmas</li><li>Psycho-social support resources</li><li>Discussing pad material discomfort</li></ul>
+    <p class="mb-0"><strong>Long-term goal:</strong> Partner to donate non-plastic, eco-friendly pads to over 1,000 adolescent girls.</p>
+  </div>
+  <div class="modal-footer"><button class="btn btn-theme" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#donateModal">Fund a Caregiver</button></div>
+</div></div></div>
+
+<div class="modal fade" id="programModal5" tabindex="-1"><div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content">
+  <div class="modal-header"><h5 class="modal-title">Agriculture &amp; Economic Empowerment</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <img src="assets/program-agriculture.jpg" class="img-fluid rounded mb-3" alt="Agriculture" />
+    <p>We foster resilient entrepreneurship among young mothers through vocational training and climate-smart farming practices — with active operations in <strong>Kitui County (Ikutha)</strong>.</p>
+    <h6 class="mt-3">Tracks:</h6>
+    <ul><li>Modern, climate-smart farming techniques</li><li>Soap making</li><li>Beadwork &amp; artifacts</li><li>Crafts &amp; handmade goods</li></ul>
+    <p class="mb-0"><strong>Goal:</strong> Build a self-sustaining, community-led agricultural cooperative model for long-term food security.</p>
+  </div>
+  <div class="modal-footer"><button class="btn btn-theme" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#donateModal">Support a Mother</button></div>
+</div></div></div>
+
+<div class="modal fade" id="programModal6" tabindex="-1"><div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content">
+  <div class="modal-header"><h5 class="modal-title">Media Advocacy</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <img src="assets/program-media.jpg" class="img-fluid rounded mb-3" alt="Media" />
+    <p>We champion mental health, suicide awareness, and disability inclusion through TV and radio platforms across Kenya.</p>
+    <h6 class="mt-3">Past features:</h6>
+    <ul><li>TV47 — Afya ya Akili ya Wanafunzi</li><li>KBC Radio 92.9 — Mental health conversations</li><li>Author talks on supporting adolescents through suicidal thoughts</li></ul>
+  </div>
+  <div class="modal-footer"><a href="#contact" class="btn btn-theme" data-bs-dismiss="modal">Invite Us to Speak</a></div>
+</div></div></div>
+
+<!-- DONATE MODAL -->
+<div class="modal fade" id="donateModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content donate-modal">
+  <div class="modal-header"><h5 class="modal-title"><i class="fas fa-heart text-gold me-2"></i>Make a Donation</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <p class="text-center mb-4">Your generosity powers mental health, digital literacy, and economic empowerment for young women in Kenya.</p>
+    <div class="donate-tabs">
+      <button class="donate-tab active" data-target="mpesa"><i class="fas fa-mobile-alt"></i> M-Pesa</button>
+      <button class="donate-tab" data-target="bank"><i class="fas fa-university"></i> Bank Transfer</button>
+      <button class="donate-tab" data-target="contact"><i class="fas fa-envelope"></i> Contact Us</button>
+    </div>
+    <div class="donate-pane active" id="mpesa">
+      <div class="donate-box">
+        <p class="mb-1"><strong>Paybill Number</strong></p>
+        <div class="copy-row"><span>522533</span><button class="copy-btn" data-copy="522533"><i class="fas fa-copy"></i></button></div>
+        <p class="mb-1 mt-3"><strong>Account Number</strong></p>
+        <div class="copy-row"><span>7766759</span><button class="copy-btn" data-copy="7766759"><i class="fas fa-copy"></i></button></div>
+        <p class="mt-3 mb-0 text-muted"><small>Works with M-Pesa and Wave transfers.</small></p>
+      </div>
+    </div>
+    <div class="donate-pane" id="bank">
+      <div class="donate-box">
+        <p class="mb-1"><strong>Bank Name</strong></p><div class="copy-row"><span>KCB Bank</span><button class="copy-btn" data-copy="KCB Bank"><i class="fas fa-copy"></i></button></div>
+        <p class="mb-1 mt-3"><strong>Branch</strong></p><div class="copy-row"><span>Lang'ata Branch</span><button class="copy-btn" data-copy="Lang'ata Branch"><i class="fas fa-copy"></i></button></div>
+        <p class="mb-1 mt-3"><strong>Account Name</strong></p><div class="copy-row"><span>Talk to Mutendwah Foundation</span><button class="copy-btn" data-copy="Talk to Mutendwah Foundation"><i class="fas fa-copy"></i></button></div>
+        <p class="mb-1 mt-3"><strong>Account Number</strong></p><div class="copy-row"><span>1322072221</span><button class="copy-btn" data-copy="1322072221"><i class="fas fa-copy"></i></button></div>
+        <p class="mb-1 mt-3"><strong>SWIFT Code</strong></p><div class="copy-row"><span>KCBLKENX</span><button class="copy-btn" data-copy="KCBLKENX"><i class="fas fa-copy"></i></button></div>
+      </div>
+    </div>
+    <div class="donate-pane" id="contact">
+      <div class="donate-box text-center">
+        <p class="mb-2">For large donations, in-kind gifts (laptops, pads), or partnerships, reach us directly:</p>
+        <p class="mb-1"><i class="fas fa-envelope text-gold me-2"></i>info@talktotmutendwah.org</p>
+        <p class="mb-0"><i class="fas fa-phone text-gold me-2"></i>+254 717 369 540</p>
+      </div>
+    </div>
+  </div>
+</div></div></div>
+
+<!-- MULTI-STEP VOLUNTEER MODAL -->
+<div class="modal fade" id="volunteerModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fas fa-hands-helping text-gold me-2"></i>Become a Volunteer</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="wizard-progress">
+          <div class="wizard-step active" data-step="1"><span>1</span>About You</div>
+          <div class="wizard-step" data-step="2"><span>2</span>Your Skills</div>
+          <div class="wizard-step" data-step="3"><span>3</span>Review</div>
+        </div>
+        <form id="volunteerForm" novalidate>
+          <input type="hidden" name="access_key" value="1d073c50-a769-4200-b292-0eec1daecdb9" />
+          <input type="hidden" name="subject" value="New Volunteer Application — Talk To Mutendwah" />
+          <input type="hidden" name="from_name" value="Talk To Mutendwah Website" />
+          <input type="checkbox" name="botcheck" style="display:none" />
+
+          <div class="wizard-pane active" data-pane="1">
+            <div class="row g-3">
+              <div class="col-md-6"><input type="text" class="form-control" name="name" placeholder="Full Name *" required /></div>
+              <div class="col-md-6"><input type="email" class="form-control" name="email" placeholder="Email *" required /></div>
+              <div class="col-md-6"><input type="tel" class="form-control" name="phone" placeholder="Phone *" required /></div>
+              <div class="col-md-6"><input type="text" class="form-control" name="location" placeholder="Location / City" id="geoLocation" /></div>
+            </div>
+          </div>
+
+          <div class="wizard-pane" data-pane="2">
+            <div class="row g-3">
+              <div class="col-12">
+                <select class="form-select" name="interest" required>
+                  <option value="">I'd like to help with... *</option>
+                  <option>School Mentorship</option>
+                  <option>Mama Angaza (Tech Training)</option>
+                  <option>Podcast / Media</option>
+                  <option>Caregivers Summit</option>
+                  <option>Agriculture / Vocational</option>
+                  <option>Fundraising / Partnerships</option>
+                  <option>Anywhere I'm needed</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <textarea class="form-control" name="message" rows="3" placeholder="Tell us about yourself &amp; availability *" required></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="wizard-pane" data-pane="3">
+            <div id="reviewContent" class="review-box"></div>
+            <p class="text-muted small mb-0 mt-3">By submitting, you agree to be contacted by Talk To Mutendwah Foundation.</p>
+          </div>
+
+          <div class="wizard-nav">
+            <button type="button" class="btn btn-theme-outline" id="wizBack" disabled>Back</button>
+            <button type="button" class="btn btn-theme" id="wizNext">Next</button>
+            <button type="submit" class="btn btn-theme d-none" id="volunteerSubmit">
+              <span class="btn-text"><i class="fas fa-paper-plane me-2"></i>Submit Application</span>
+              <span class="btn-loading d-none"><i class="fas fa-spinner fa-spin me-2"></i>Sending...</span>
+            </button>
+          </div>
+        </form>
+        <div class="form-alert mt-3" id="volunteerAlert"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AMBIENT SOUND -->
+<button id="soundToggle" class="sound-toggle" aria-label="Toggle ambient sound">
+  <i class="fas fa-volume-mute"></i>
+</button>
+<audio id="ambientAudio" loop preload="none">
+  <source src="assets/ambient.mp3" type="audio/mpeg" />
+</audio>
+
+<!-- LANGUAGE TOGGLE -->
+<div class="lang-toggle">
+  <button class="lang-btn active" data-lang="en">EN</button>
+  <button class="lang-btn" data-lang="sw">SW</button>
+</div>
+
+<!-- LIVE SEARCH -->
+<div class="search-widget">
+  <button id="searchToggle" class="search-toggle" aria-label="Search">
+    <i class="fas fa-search"></i>
+  </button>
+  <div id="searchPanel" class="search-panel">
+    <input type="text" id="searchInput" placeholder="Search programs, events, stories..." autocomplete="off" />
+    <div id="searchResults" class="search-results"></div>
+  </div>
+</div>
+
+<!-- CHATBOT -->
+<div id="chatbot" class="chatbot">
+  <button id="chatbotToggle" class="chatbot-toggle" aria-label="Chat with us">
+    <i class="fas fa-comments"></i>
+    <span class="chatbot-badge">1</span>
+  </button>
+  <div id="chatbotWindow" class="chatbot-window">
+    <div class="chatbot-header">
+      <div class="chatbot-avatar">TM</div>
+      <div>
+        <strong>Mutendwah Assistant</strong><br />
+        <span class="online-dot"></span> <small>Online</small>
+      </div>
+      <button id="chatbotClose" class="chatbot-close">&times;</button>
+    </div>
+    <div id="chatbotMessages" class="chatbot-messages"></div>
+    <div class="chatbot-quick">
+      <button data-q="What programs do you offer?">Programs</button>
+      <button data-q="How do I donate?">Donate</button>
+      <button data-q="How can I volunteer?">Volunteer</button>
+      <button data-q="Where are you located?">Location</button>
+    </div>
+    <div class="chatbot-input">
+      <input type="text" id="chatbotInput" placeholder="Ask me anything..." />
+      <button id="chatbotSend"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- FAB CLUSTER -->
+<div class="fab-cluster">
+  <button class="fab-main" id="fabToggle" aria-label="Quick actions">
+    <i class="fas fa-plus"></i>
+  </button>
+  <div class="fab-actions">
+    <a href="#" class="fab-item fab-donate" data-bs-toggle="modal" data-bs-target="#donateModal" aria-label="Donate">
+      <i class="fas fa-heart"></i><span class="fab-tooltip">Donate</span>
+    </a>
+    <a href="#" class="fab-item fab-volunteer" data-bs-toggle="modal" data-bs-target="#volunteerModal" aria-label="Volunteer">
+      <i class="fas fa-hands-helping"></i><span class="fab-tooltip">Volunteer</span>
+    </a>
+    <a href="tel:+254717369540" class="fab-item fab-call" aria-label="Call">
+      <i class="fas fa-phone"></i><span class="fab-tooltip">Call Us</span>
+    </a>
+    <a href="https://wa.me/254717369540" target="_blank" class="fab-item fab-whatsapp" aria-label="WhatsApp">
+      <i class="fab fa-whatsapp"></i><span class="fab-tooltip">WhatsApp</span>
+    </a>
+  </div>
+</div>
+
+<!-- CONFETTI + BADGE -->
+<div id="confettiContainer" class="confetti-container"></div>
+<div id="badgeToast" class="badge-toast"></div>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.0.20/leaflet-maplibre-gl.js"></script>
+<script src="js/translations.js"></script>
+<script src="js/main.js"></script>
+<script src="js/features.js"></script>
+<script src="js/chatbot.js"></script>
+
+<!-- Smart button → Contact section with auto-selected topic -->
+<script>
+  (function () {
+    const topicMap = {
+      enrollCourseBtn:    'Program Enrollment',
+      partnerCtaBtn:      'Partnership',
+      registerInterestBtn: 'Program Enrollment'
+    };
+
+    document.addEventListener('click', function (e) {
+      const btn = e.target.closest('a[id]');
+      if (!btn) return;
+      const topic = topicMap[btn.id];
+      if (!topic) return;
+
+      setTimeout(function () {
+        const topicSelect = document.querySelector('#contactForm select[name="topic"]');
+        if (topicSelect) {
+          Array.from(topicSelect.options).forEach(function (opt) {
+            if (opt.text.trim() === topic) {
+              topicSelect.value = opt.value || opt.text;
+              opt.selected = true;
+            }
+          });
+          topicSelect.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        const nameField = document.querySelector('#contactForm input[name="name"]');
+        if (nameField) nameField.focus({ preventScroll: true });
+      }, 700);
+    });
+  })();
+</script>
+</body>
+</html>
